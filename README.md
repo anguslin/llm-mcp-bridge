@@ -8,7 +8,7 @@ A Node.js + Express backend that connects a static frontend (GitHub Pages) to th
 - **Security**: CORS restriction, API key validation, and rate limiting (100 requests per 15 minutes per IP)
 - **LLM Integration**: Uses Hugging Face Inference API (Falcon-7B) with conversation history
 - **MCP Integration**: Connects to `@anguslin/mcp-capitol-trades` for politician trading data
-- **Conversation History**: Stores up to 20 messages per user in a local JSON file
+- **Conversation History**: Stores up to 30 messages per user in a local JSON file
 
 ## Installation
 
@@ -29,7 +29,7 @@ cp .env.example .env
 
 ## Running the Server
 
-Start the server:
+Start the server in production mode:
 ```bash
 npm start
 ```
@@ -38,6 +38,29 @@ For development with auto-reload:
 ```bash
 npm run dev
 ```
+
+Local helpers (automatically set `NODE_ENV=development`):
+```bash
+npm run start:local
+npm run dev:local
+npm run ping:local
+```
+
+These scripts expect `.env` to contain `HF_API_KEY`, `API_KEY`, and optionally override `PORT`.
+
+## Testing the Local Server
+
+With your server running (e.g. `npm run dev:local`), you can send a smoke test to `/health` and `/api/chat`:
+```bash
+npm run test:local
+```
+The test script reads credentials from `.env` and prints the responses. Ensure `API_KEY` is set; otherwise it skips the chat call.
+
+If you prefer a one-off curl-style check without running the full test script:
+```bash
+npm run ping:local
+```
+This sends the same requests but keeps the output minimal.
 
 ## API Endpoints
 

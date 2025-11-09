@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "start:local": "cross-env NODE_ENV=development node server.js",
+    "dev:local": "cross-env NODE_ENV=development node --watch server.js",
+    "test:local": "node scripts/testServer.js"
   },
   "keywords": [
     "express",
@@ -23,6 +26,9 @@
     "dotenv": "^16.3.1",
     "express-rate-limit": "^7.1.5",
     "@anguslin/mcp-capitol-trades": "^1.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
 
