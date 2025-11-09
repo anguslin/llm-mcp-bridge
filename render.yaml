@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: llm-mcp-bridge
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Add these environment variables in Render dashboard:
+      # - HF_API_KEY
+      # - API_KEY
+      # - GITHUB_PAGES_DOMAIN (optional)
+
