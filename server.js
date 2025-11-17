@@ -18,6 +18,9 @@ dotenv.config();
 
 const app = express();
 
+const trustProxy = process.env.TRUST_PROXY ?? 'loopback';
+app.set('trust proxy', trustProxy);
+
 // Middleware
 app.use(bodyParser.json());
 app.use(corsMiddleware);

@@ -1,40 +1,33 @@
-import fetch from 'node-fetch';
-import { HF_API_KEY } from '../config/constants.js';
+import { InferenceClient } from '@huggingface/inference';
+import { HF_API_KEY, HF_MODEL_TYPE } from '../config/constants.js';
+
+// Initialize the Hugging Face Inference client
+const client = new InferenceClient(HF_API_KEY);
 
 /**
  * Call Hugging Face Inference API
+ * Uses the official @huggingface/inference SDK
  */
 export async function callHuggingFaceAPI(prompt) {
   try {
-    const response = await fetch('https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${HF_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        inputs: prompt,
-        parameters: {
-          return_full_text: false,
-          max_new_tokens: 500,
-          temperature: 0.7,
+    const chatCompletion = await client.chatCompletion({
+      model: HF_MODEL_TYPE,
+      messages: [
+        {
+          role: "user",
+          content: prompt,
         },
-      }),
+      ],
+      max_tokens: 50,
+      temperature: 0.7,
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Hugging Face API error: ${response.status} - ${errorText}`);
-    }
-
-    const data = await response.json();
-    
-    // Handle array response format
-    if (Array.isArray(data) && data.length > 0) {
-      return data[0].generated_text || data[0];
+    // Extract the message content from the response
+    if (chatCompletion.choices && chatCompletion.choices.length > 0 && chatCompletion.choices[0].message) {
+      return chatCompletion.choices[0].message.content;
     }
     
-    return data.generated_text || JSON.stringify(data);
+    throw new Error('Unexpected response format from API');
   } catch (error) {
     console.error('Hugging Face API error:', error);
     throw error;

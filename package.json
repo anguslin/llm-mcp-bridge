@@ -9,7 +9,10 @@
     "dev": "node --watch server.js",
     "start:local": "cross-env NODE_ENV=development node server.js",
     "dev:local": "cross-env NODE_ENV=development node --watch server.js",
-    "test:local": "node scripts/testServer.js"
+    "test": "node scripts/testServer.js",
+    "test:local": "node scripts/testServer.js",
+    "test:remote": "cross-env BASE_URL=https://llm-mcp-bridge.onrender.com node scripts/testServer.js",
+    "test:llm": "node scripts/testLLM.js"
   },
   "keywords": [
     "express",
@@ -25,7 +28,8 @@
     "node-fetch": "^3.3.2",
     "dotenv": "^16.3.1",
     "express-rate-limit": "^7.1.5",
-    "@anguslin/mcp-capitol-trades": "^1.0.0"
+    "@anguslin/mcp-capitol-trades": "^1.0.0",
+    "@huggingface/inference": "^4.13.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
