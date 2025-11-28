@@ -40,20 +40,20 @@ async function testLLMService() {
     console.log('Extracted JSON:', JSON.stringify(extractedJson, null, 2));
     console.log('\n---\n');
 
-    // Test 4: Test with conversation history
-    console.log('4. Testing with conversation history...');
-    const historyWithContext = [
-      { role: 'user', content: 'Hello' },
-      { role: 'assistant', content: 'Hi! How can I help you with politician trading data?' }
-    ];
-    const promptWithHistory = buildPrompt('Tell me about AAPL trades', historyWithContext);
-    console.log('Prompt with history length:', promptWithHistory.length, 'characters');
+    // // Test 4: Test with conversation history
+    // console.log('4. Testing with conversation history...');
+    // const historyWithContext = [
+    //   { role: 'user', content: 'Hello' },
+    //   { role: 'assistant', content: 'Hi! How can I help you with politician trading data?' }
+    // ];
+    // const promptWithHistory = buildPrompt('Tell me about AAPL trades', historyWithContext);
+    // console.log('Prompt with history length:', promptWithHistory.length, 'characters');
     
-    const llmResponseWithHistory = await callHuggingFaceAPI(promptWithHistory);
-    console.log('Response with history:', llmResponseWithHistory.substring(0, 300));
-    console.log('\n---\n');
+    // const llmResponseWithHistory = await callHuggingFaceAPI(promptWithHistory);
+    // console.log('Response with history:', llmResponseWithHistory.substring(0, 300));
+    // console.log('\n---\n');
 
-    console.log('✅ All tests completed successfully!');
+    // console.log('✅ All tests completed successfully!');
 
   } catch (error) {
     console.error('❌ Test failed:', error.message);

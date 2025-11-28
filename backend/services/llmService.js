@@ -18,13 +18,18 @@ export async function callHuggingFaceAPI(prompt) {
           content: prompt,
         },
       ],
-      max_tokens: 50,
       temperature: 0.7,
     });
 
     // Extract the message content from the response
     if (chatCompletion.choices && chatCompletion.choices.length > 0 && chatCompletion.choices[0].message) {
-      return chatCompletion.choices[0].message.content;
+      const content = chatCompletion.choices[0].message.content;
+      console.log('=== Raw LLM API Response ===');
+      console.log(JSON.stringify(chatCompletion, null, 2));
+      console.log('=== Extracted Content ===');
+      console.log(content);
+      console.log('===========================');
+      return content;
     }
     
     throw new Error('Unexpected response format from API');
